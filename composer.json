@@ -19,6 +19,9 @@
         "laminas/laminas-session": "^2.7.4",
         "squizlabs/php_codesniffer": "^2.7"
     },
+    "suggest": {
+        "laminas/laminas-session": "Laminas\\Session component"
+    },
     "config": {
         "sort-packages": true
     },
