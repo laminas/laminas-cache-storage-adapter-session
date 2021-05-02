@@ -15,29 +15,25 @@ use Laminas\Session\Container as SessionContainer;
  * @group      Laminas_Cache
  * @covers Laminas\Cache\Storage\Adapter\Session<extended>
  */
-class SessionTest extends CommonAdapterTest
+class SessionTest extends AbstractCommonAdapterTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         $_SESSION = [];
         SessionContainer::setDefaultManager(null);
         $sessionContainer = new SessionContainer('Default');
 
-        $this->_options = new Cache\Storage\Adapter\SessionOptions([
+        $this->options = new Cache\Storage\Adapter\SessionOptions([
             'session_container' => $sessionContainer
         ]);
-        $this->_storage = new Cache\Storage\Adapter\Session();
-        $this->_storage->setOptions($this->_options);
+        $this->storage = new Cache\Storage\Adapter\Session();
+        $this->storage->setOptions($this->options);
 
         parent::setUp();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
-        if (! class_exists(SessionContainer::class)) {
-            return;
-        }
-
         $_SESSION = [];
         SessionContainer::setDefaultManager(null);
     }

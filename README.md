@@ -1,7 +1,6 @@
 # laminas-cache-storage-adapter-session
 
-[![Build Status](https://travis-ci.com/laminas/laminas-cache-storage-adapter-session.svg?branch=master)](https://travis-ci.com/laminas/laminas-cache-storage-adapter-session)
-[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-cache-storage-adapter-session/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-cache-storage-adapter-session?branch=master)
+[![Build Status](https://github.com/laminas/laminas-cache-storage-adapter-session/workflows/Continuous%20Integration/badge.svg)](https://github.com/laminas/laminas-cache-storage-adapter-session/actions?query=workflow%3A"Continuous+Integration")
 
 This library provides …
 

@@ -8,48 +8,20 @@
 
 namespace LaminasTest\Cache\Psr\SimpleCache;
 
-use Cache\IntegrationTests\SimpleCacheTest;
-use Laminas\Cache\Psr\SimpleCache\SimpleCacheDecorator;
+use Laminas\Cache\Psr\CacheItemPool\CacheException;
+use Laminas\Cache\Psr\CacheItemPool\CacheItemPoolDecorator;
 use Laminas\Cache\StorageFactory;
-use Laminas\Session\Container as SessionContainer;
+use PHPUnit\Framework\TestCase;
 
-class SessionIntegrationTest extends SimpleCacheTest
+class SessionIntegrationTest extends TestCase
 {
-    public function setUp()
+    /**
+     * The session adapter doesn't support TTL
+     */
+    public function testAdapterNotSupported()
     {
-        if (! class_exists(SessionContainer::class)) {
-            $this->markTestSkipped('Install laminas-session to enable this test');
-        }
-
-        $_SESSION = [];
-        SessionContainer::setDefaultManager(null);
-
-        $this->skippedTests['testSetTtl'] = 'Session adapter does not honor TTL';
-        $this->skippedTests['testSetMultipleTtl'] = 'Session adapter does not honor TTL';
-        $this->skippedTests['testObjectDoesNotChangeInCache'] =
-            'Session adapter stores objects in memory; so change in references is possible';
-
-        parent::setUp();
-    }
-
-    public function tearDown()
-    {
-        if (! class_exists(SessionContainer::class)) {
-            return;
-        }
-
-        $_SESSION = [];
-        SessionContainer::setDefaultManager(null);
-
-        parent::tearDown();
-    }
-
-    public function createSimpleCache()
-    {
-        $sessionContainer = new SessionContainer('Default');
-        $storage = StorageFactory::adapterfactory('session', [
-            'session_container' => $sessionContainer,
-        ]);
-        return new SimpleCacheDecorator($storage);
+        $this->expectException(CacheException::class);
+        $storage = StorageFactory::adapterfactory('session');
+        new CacheItemPoolDecorator($storage);
     }
 }
