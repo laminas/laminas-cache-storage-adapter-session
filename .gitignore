@@ -1,4 +1,5 @@
 /.phpunit.result.cache
+/.phpcs-cache
 /docs/html/
 /laminas-mkdoc-theme.tgz
 /laminas-mkdoc-theme/

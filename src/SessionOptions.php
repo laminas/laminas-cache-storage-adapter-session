@@ -20,17 +20,16 @@ class SessionOptions extends AdapterOptions
      *
      * @var null|SessionContainer
      */
-    protected $sessionContainer = null;
+    protected $sessionContainer;
 
     /**
      * Set the session container
      *
-     * @param  null|SessionContainer $sessionContainer
      * @return SessionOptions Provides a fluent interface
      */
-    public function setSessionContainer(SessionContainer $sessionContainer = null)
+    public function setSessionContainer(?SessionContainer $sessionContainer = null)
     {
-        if ($this->sessionContainer != $sessionContainer) {
+        if ($this->sessionContainer !== $sessionContainer) {
             $this->triggerOptionEvent('session_container', $sessionContainer);
             $this->sessionContainer = $sessionContainer;
         }

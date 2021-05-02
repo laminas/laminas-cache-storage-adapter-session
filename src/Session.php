@@ -15,6 +15,12 @@ use Laminas\Cache\Storage\FlushableInterface;
 use Laminas\Cache\Storage\IterableInterface;
 use Laminas\Session\Container as SessionContainer;
 use stdClass;
+use Traversable;
+
+use function array_key_exists;
+use function array_keys;
+use function array_merge;
+use function strpos;
 
 class Session extends AbstractAdapter implements
     ClearByPrefixInterface,
@@ -24,9 +30,10 @@ class Session extends AbstractAdapter implements
     /**
      * Set options.
      *
-     * @param  array|\Traversable|SessionOptions $options
-     * @return Memory
      * @see    getOptions()
+     *
+     * @param array|Traversable|SessionOptions $options
+     * @return Memory
      */
     public function setOptions($options)
     {
@@ -40,8 +47,9 @@ class Session extends AbstractAdapter implements
     /**
      * Get options.
      *
-     * @return SessionOptions
      * @see setOptions()
+     *
+     * @return SessionOptions
      */
     public function getOptions()
     {
@@ -121,8 +129,8 @@ class Session extends AbstractAdapter implements
             return true;
         }
 
-        $data    = $cntr->offsetGet($ns);
-        foreach ($data as $key => & $item) {
+        $data = $cntr->offsetGet($ns);
+        foreach ($data as $key => &$item) {
             if (strpos($key, $prefix) === 0) {
                 unset($data[$key]);
             }
@@ -143,10 +151,10 @@ class Session extends AbstractAdapter implements
      * @return mixed Data on success, null on failure
      * @throws Exception\ExceptionInterface
      */
-    protected function internalGetItem(& $normalizedKey, & $success = null, & $casToken = null)
+    protected function internalGetItem(&$normalizedKey, &$success = null, &$casToken = null)
     {
-        $cntr    = $this->getSessionContainer();
-        $ns      = $this->getOptions()->getNamespace();
+        $cntr = $this->getSessionContainer();
+        $ns   = $this->getOptions()->getNamespace();
 
         if (! $cntr->offsetExists($ns)) {
             $success = false;
@@ -159,7 +167,8 @@ class Session extends AbstractAdapter implements
             return;
         }
 
-        $casToken = $value = $data[$normalizedKey];
+        $value    = $data[$normalizedKey];
+        $casToken = $value;
         return $value;
     }
 
@@ -170,7 +179,7 @@ class Session extends AbstractAdapter implements
      * @return array Associative array of keys and values
      * @throws Exception\ExceptionInterface
      */
-    protected function internalGetItems(array & $normalizedKeys)
+    protected function internalGetItems(array &$normalizedKeys)
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -196,7 +205,7 @@ class Session extends AbstractAdapter implements
      * @param  string $normalizedKey
      * @return bool
      */
-    protected function internalHasItem(& $normalizedKey)
+    protected function internalHasItem(&$normalizedKey)
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -215,7 +224,7 @@ class Session extends AbstractAdapter implements
      * @param array $normalizedKeys
      * @return array Array of found keys
      */
-    protected function internalHasItems(array & $normalizedKeys)
+    protected function internalHasItems(array &$normalizedKeys)
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -241,12 +250,11 @@ class Session extends AbstractAdapter implements
      * @param  string $normalizedKey
      * @return array|bool Metadata on success, false on failure
      * @throws Exception\ExceptionInterface
-     *
      * @triggers getMetadata.pre(PreEvent)
      * @triggers getMetadata.post(PostEvent)
      * @triggers getMetadata.exception(ExceptionEvent)
      */
-    protected function internalGetMetadata(& $normalizedKey)
+    protected function internalGetMetadata(&$normalizedKey)
     {
         return $this->internalHasItem($normalizedKey) ? [] : false;
     }
@@ -261,11 +269,11 @@ class Session extends AbstractAdapter implements
      * @return bool
      * @throws Exception\ExceptionInterface
      */
-    protected function internalSetItem(& $normalizedKey, & $value)
+    protected function internalSetItem(&$normalizedKey, &$value)
     {
-        $cntr = $this->getSessionContainer();
-        $ns   = $this->getOptions()->getNamespace();
-        $data = $cntr->offsetExists($ns) ? $cntr->offsetGet($ns) : [];
+        $cntr                 = $this->getSessionContainer();
+        $ns                   = $this->getOptions()->getNamespace();
+        $data                 = $cntr->offsetExists($ns) ? $cntr->offsetGet($ns) : [];
         $data[$normalizedKey] = $value;
         $cntr->offsetSet($ns, $data);
         return true;
@@ -278,7 +286,7 @@ class Session extends AbstractAdapter implements
      * @return array Array of not stored keys
      * @throws Exception\ExceptionInterface
      */
-    protected function internalSetItems(array & $normalizedKeyValuePairs)
+    protected function internalSetItems(array &$normalizedKeyValuePairs)
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -301,7 +309,7 @@ class Session extends AbstractAdapter implements
      * @return bool
      * @throws Exception\ExceptionInterface
      */
-    protected function internalAddItem(& $normalizedKey, & $value)
+    protected function internalAddItem(&$normalizedKey, &$value)
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -329,7 +337,7 @@ class Session extends AbstractAdapter implements
      * @return array Array of not stored keys
      * @throws Exception\ExceptionInterface
      */
-    protected function internalAddItems(array & $normalizedKeyValuePairs)
+    protected function internalAddItems(array &$normalizedKeyValuePairs)
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -361,7 +369,7 @@ class Session extends AbstractAdapter implements
      * @return bool
      * @throws Exception\ExceptionInterface
      */
-    protected function internalReplaceItem(& $normalizedKey, & $value)
+    protected function internalReplaceItem(&$normalizedKey, &$value)
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -387,7 +395,7 @@ class Session extends AbstractAdapter implements
      * @return array Array of not stored keys
      * @throws Exception\ExceptionInterface
      */
-    protected function internalReplaceItems(array & $normalizedKeyValuePairs)
+    protected function internalReplaceItems(array &$normalizedKeyValuePairs)
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -416,7 +424,7 @@ class Session extends AbstractAdapter implements
      * @return bool
      * @throws Exception\ExceptionInterface
      */
-    protected function internalRemoveItem(& $normalizedKey)
+    protected function internalRemoveItem(&$normalizedKey)
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -449,7 +457,7 @@ class Session extends AbstractAdapter implements
      * @return int|bool The new value on success, false on failure
      * @throws Exception\ExceptionInterface
      */
-    protected function internalIncrementItem(& $normalizedKey, & $value)
+    protected function internalIncrementItem(&$normalizedKey, &$value)
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -462,7 +470,7 @@ class Session extends AbstractAdapter implements
 
         if (array_key_exists($normalizedKey, $data)) {
             $data[$normalizedKey] += $value;
-            $newValue = $data[$normalizedKey];
+            $newValue              = $data[$normalizedKey];
         } else {
             // initial value
             $newValue             = $value;
@@ -481,7 +489,7 @@ class Session extends AbstractAdapter implements
      * @return int|bool The new value on success, false on failure
      * @throws Exception\ExceptionInterface
      */
-    protected function internalDecrementItem(& $normalizedKey, & $value)
+    protected function internalDecrementItem(&$normalizedKey, &$value)
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -494,7 +502,7 @@ class Session extends AbstractAdapter implements
 
         if (array_key_exists($normalizedKey, $data)) {
             $data[$normalizedKey] -= $value;
-            $newValue = $data[$normalizedKey];
+            $newValue              = $data[$normalizedKey];
         } else {
             // initial value
             $newValue             = -$value;
@@ -516,7 +524,7 @@ class Session extends AbstractAdapter implements
     {
         if ($this->capabilities === null) {
             $this->capabilityMarker = new stdClass();
-            $this->capabilities = new Capabilities(
+            $this->capabilities     = new Capabilities(
                 $this,
                 $this->capabilityMarker,
                 [
