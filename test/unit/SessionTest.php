@@ -24,7 +24,7 @@ class SessionTest extends AbstractCommonAdapterTest
         $sessionContainer = new SessionContainer('Default');
 
         $this->options = new Cache\Storage\Adapter\SessionOptions([
-            'session_container' => $sessionContainer
+            'session_container' => $sessionContainer,
         ]);
         $this->storage = new Cache\Storage\Adapter\Session();
         $this->storage->setOptions($this->options);
@@ -38,7 +38,7 @@ class SessionTest extends AbstractCommonAdapterTest
         SessionContainer::setDefaultManager(null);
     }
 
-    public function getCommonAdapterNamesProvider()
+    public function getCommonAdapterNamesProvider(): array
     {
         return [
             ['session'],
