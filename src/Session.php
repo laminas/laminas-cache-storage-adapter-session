@@ -16,7 +16,7 @@ use function array_keys;
 use function array_merge;
 use function strpos;
 
-class Session extends AbstractAdapter implements
+final class Session extends AbstractAdapter implements
     ClearByPrefixInterface,
     FlushableInterface,
     IterableInterface
@@ -27,7 +27,7 @@ class Session extends AbstractAdapter implements
      * @see    getOptions()
      *
      * @param array|Traversable|SessionOptions $options
-     * @return Memory
+     * @return Session
      */
     public function setOptions($options)
     {

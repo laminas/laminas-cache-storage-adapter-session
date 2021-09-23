@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.10.0@916b098b008f6de4543892b1e0651c1c3b92cbfa">
   <file src="src/Session.php">
-    <InvalidThrow occurrences="12">
-      <code>Exception\ExceptionInterface</code>
-      <code>Exception\ExceptionInterface</code>
-      <code>Exception\ExceptionInterface</code>
-      <code>Exception\ExceptionInterface</code>
-      <code>Exception\ExceptionInterface</code>
-      <code>Exception\ExceptionInterface</code>
-      <code>Exception\ExceptionInterface</code>
-      <code>Exception\ExceptionInterface</code>
-      <code>Exception\ExceptionInterface</code>
-      <code>Exception\ExceptionInterface</code>
-      <code>Exception\ExceptionInterface</code>
-      <code>Exception\ExceptionInterface</code>
-    </InvalidThrow>
     <LessSpecificReturnStatement occurrences="1">
       <code>parent::setOptions($options)</code>
     </LessSpecificReturnStatement>
@@ -112,7 +98,7 @@
       <code>$options</code>
     </MoreSpecificImplementedParamType>
     <MoreSpecificReturnType occurrences="1">
-      <code>Memory</code>
+      <code>Session</code>
     </MoreSpecificReturnType>
     <PropertyNotSetInConstructor occurrences="1">
       <code>Session</code>

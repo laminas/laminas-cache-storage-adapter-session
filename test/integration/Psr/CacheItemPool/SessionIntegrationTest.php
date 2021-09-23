@@ -4,7 +4,7 @@ namespace LaminasTest\Cache\Psr\CacheItemPool;
 
 use Laminas\Cache\Psr\CacheItemPool\CacheException;
 use Laminas\Cache\Psr\CacheItemPool\CacheItemPoolDecorator;
-use Laminas\Cache\StorageFactory;
+use Laminas\Cache\Storage\Adapter\Session;
 use PHPUnit\Framework\TestCase;
 
 class SessionIntegrationTest extends TestCase
@@ -15,7 +15,7 @@ class SessionIntegrationTest extends TestCase
     public function testAdapterNotSupported()
     {
         $this->expectException(CacheException::class);
-        $storage = StorageFactory::adapterfactory('session');
+        $storage = new Session();
         new CacheItemPoolDecorator($storage);
     }
 }

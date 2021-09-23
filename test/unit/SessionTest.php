@@ -2,14 +2,14 @@
 
 namespace LaminasTest\Cache\Storage\Adapter;
 
-use Laminas\Cache;
+use Laminas\Cache\Storage\Adapter\Session;
+use Laminas\Cache\Storage\Adapter\SessionOptions;
 use Laminas\Session\Container as SessionContainer;
 
 /**
- * @group      Laminas_Cache
- * @covers Laminas\Cache\Storage\Adapter\Session<extended>
+ * @template-extends AbstractCommonAdapterTest<Session,SessionOptions>
  */
-class SessionTest extends AbstractCommonAdapterTest
+final class SessionTest extends AbstractCommonAdapterTest
 {
     public function setUp(): void
     {
@@ -17,26 +17,19 @@ class SessionTest extends AbstractCommonAdapterTest
         SessionContainer::setDefaultManager(null);
         $sessionContainer = new SessionContainer('Default');
 
-        $this->options = new Cache\Storage\Adapter\SessionOptions([
+        $this->options = new SessionOptions([
             'session_container' => $sessionContainer,
         ]);
-        $this->storage = new Cache\Storage\Adapter\Session();
+        $this->storage = new Session();
         $this->storage->setOptions($this->options);
-
         parent::setUp();
     }
 
     public function tearDown(): void
     {
+        parent::tearDown();
+
         $_SESSION = [];
         SessionContainer::setDefaultManager(null);
-    }
-
-    public function getCommonAdapterNamesProvider(): array
-    {
-        return [
-            ['session'],
-            ['Session'],
-        ];
     }
 }

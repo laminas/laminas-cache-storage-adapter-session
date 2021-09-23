@@ -7,7 +7,7 @@ use Laminas\Session\Container as SessionContainer;
 /**
  * These are options specific to the APC adapter
  */
-class SessionOptions extends AdapterOptions
+final class SessionOptions extends AdapterOptions
 {
     /**
      * The session container
@@ -21,7 +21,7 @@ class SessionOptions extends AdapterOptions
      *
      * @return SessionOptions Provides a fluent interface
      */
-    public function setSessionContainer(?SessionContainer $sessionContainer = null)
+    public function setSessionContainer(?SessionContainer $sessionContainer = null): self
     {
         if ($this->sessionContainer !== $sessionContainer) {
             $this->triggerOptionEvent('session_container', $sessionContainer);
@@ -33,10 +33,8 @@ class SessionOptions extends AdapterOptions
 
     /**
      * Get the session container
-     *
-     * @return null|SessionContainer
      */
-    public function getSessionContainer()
+    public function getSessionContainer(): ?SessionContainer
     {
         return $this->sessionContainer;
     }
