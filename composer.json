@@ -7,27 +7,30 @@
   ],
   "license": "BSD-3-Clause",
   "require": {
-    "php": "^7.3 || ~8.0.0"
-  },
-  "conflict": {
-    "laminas/laminas-cache": "<2.10"
+    "php": "^7.3 || ~8.0.0",
+    "laminas/laminas-cache": "^3.0",
+    "laminas/laminas-session": "^2.7.4"
   },
   "provide": {
     "laminas/laminas-cache-storage-implementation": "1.0"
   },
   "require-dev": {
-    "laminas/laminas-cache": "^2.10",
-    "laminas/laminas-cache-storage-adapter-test": "^1.1",
-    "laminas/laminas-coding-standard": "^2.1",
-    "laminas/laminas-session": "^2.7.4"
-  },
-  "suggest": {
-    "laminas/laminas-session": "Laminas\\Session component"
+    "laminas/laminas-cache": "3.0.x-dev",
+    "laminas/laminas-cache-storage-adapter-benchmark": "^1.0",
+    "laminas/laminas-cache-storage-adapter-test": "2.0.x-dev",
+    "laminas/laminas-coding-standard": "~2.1.4",
+    "psalm/plugin-phpunit": "^0.16.1",
+    "vimeo/psalm": "^4.10"
   },
   "config": {
     "sort-packages": true
   },
-  "extra": {},
+  "extra": {
+    "laminas": {
+      "config-provider": "Laminas\\Cache\\Storage\\Adapter\\Session\\ConfigProvider",
+      "module": "Laminas\\Cache\\Storage\\Adapter\\Session"
+    }
+  },
   "autoload": {
     "psr-4": {
       "Laminas\\Cache\\Storage\\Adapter\\": "src/"
@@ -35,8 +38,10 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "LaminasTest\\Cache\\Storage\\Adapter\\": "test/unit",
-      "LaminasTest\\Cache\\Psr\\": "test/integration/Psr"
+      "LaminasTest\\Cache\\Storage\\Adapter\\": [
+        "test/unit",
+        "test/integration/Psr"
+      ]
     }
   },
   "scripts": {

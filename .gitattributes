@@ -7,3 +7,7 @@
 /phpcs.xml export-ignore
 /phpunit.xml.dist export-ignore
 /test/ export-ignore
+/psalm.xml.dist export-ignore
+/psalm-baseline.xml export-ignore
+/benchmark/ export-ignore
+/phpbench.json export-ignore
