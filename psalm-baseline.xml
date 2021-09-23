@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.10.0@916b098b008f6de4543892b1e0651c1c3b92cbfa">
+  <file src="src/Session.php">
+    <InvalidThrow occurrences="12">
+      <code>Exception\ExceptionInterface</code>
+      <code>Exception\ExceptionInterface</code>
+      <code>Exception\ExceptionInterface</code>
+      <code>Exception\ExceptionInterface</code>
+      <code>Exception\ExceptionInterface</code>
+      <code>Exception\ExceptionInterface</code>
+      <code>Exception\ExceptionInterface</code>
+      <code>Exception\ExceptionInterface</code>
+      <code>Exception\ExceptionInterface</code>
+      <code>Exception\ExceptionInterface</code>
+      <code>Exception\ExceptionInterface</code>
+      <code>Exception\ExceptionInterface</code>
+    </InvalidThrow>
+    <LessSpecificReturnStatement occurrences="1">
+      <code>parent::setOptions($options)</code>
+    </LessSpecificReturnStatement>
+    <MixedArgument occurrences="16">
+      <code>$cntr-&gt;offsetGet($ns)</code>
+      <code>$cntr-&gt;offsetGet($ns)</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$key</code>
+      <code>$normalizedKey</code>
+      <code>$normalizedKey</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="6">
+      <code>$data[$key]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment occurrences="9">
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+    </MixedArrayAssignment>
+    <MixedArrayOffset occurrences="3">
+      <code>$data[$key]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$result[$normalizedKey]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="32">
+      <code>$casToken</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+      <code>$item</code>
+      <code>$key</code>
+      <code>$newValue</code>
+      <code>$newValue</code>
+      <code>$normalizedKey</code>
+      <code>$normalizedKey</code>
+      <code>$result[$normalizedKey]</code>
+      <code>$result[]</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="3">
+      <code>SessionOptions</code>
+      <code>int|bool</code>
+      <code>int|bool</code>
+    </MixedInferredReturnType>
+    <MixedOperand occurrences="2">
+      <code>$data[$normalizedKey]</code>
+      <code>$data[$normalizedKey]</code>
+    </MixedOperand>
+    <MixedReturnStatement occurrences="3">
+      <code>$newValue</code>
+      <code>$newValue</code>
+      <code>$this-&gt;options</code>
+    </MixedReturnStatement>
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$options</code>
+    </MoreSpecificImplementedParamType>
+    <MoreSpecificReturnType occurrences="1">
+      <code>Memory</code>
+    </MoreSpecificReturnType>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>Session</code>
+    </PropertyNotSetInConstructor>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(string) $prefix</code>
+    </RedundantCastGivenDocblockType>
+  </file>
+  <file src="test/integration/Psr/CacheItemPool/SessionIntegrationTest.php">
+    <MissingReturnType occurrences="1">
+      <code>testAdapterNotSupported</code>
+    </MissingReturnType>
+  </file>
+  <file src="test/integration/Psr/SimpleCache/SessionIntegrationTest.php">
+    <MissingReturnType occurrences="1">
+      <code>testAdapterNotSupported</code>
+    </MissingReturnType>
+  </file>
+</files>
