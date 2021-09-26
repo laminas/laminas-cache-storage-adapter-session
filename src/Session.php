@@ -71,10 +71,8 @@ final class Session extends AbstractAdapter implements
 
     /**
      * Get the storage iterator
-     *
-     * @return KeyListIterator
      */
-    public function getIterator()
+    public function getIterator(): KeyListIterator
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
