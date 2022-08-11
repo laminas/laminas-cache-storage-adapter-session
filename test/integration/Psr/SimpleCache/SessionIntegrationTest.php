@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Cache\Storage\Adapter\Psr\SimpleCache;
 
 use Laminas\Cache\Psr\CacheItemPool\CacheException;
