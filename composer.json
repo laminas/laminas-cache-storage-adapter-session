@@ -7,25 +7,24 @@
   ],
   "license": "BSD-3-Clause",
   "require": {
-    "php": "^7.3 || ~8.0.0 || ~8.1.0",
-    "laminas/laminas-cache": "^3.0",
+    "php": "~7.4.0 || ~8.0.0 || ~8.1.0",
+    "laminas/laminas-cache": "^3.3",
     "laminas/laminas-session": "^2.12.0"
   },
   "provide": {
     "laminas/laminas-cache-storage-implementation": "1.0"
   },
   "require-dev": {
-    "laminas/laminas-cache": "3.0.x-dev",
     "laminas/laminas-cache-storage-adapter-benchmark": "^1.0",
-    "laminas/laminas-cache-storage-adapter-test": "2.0.x-dev",
-    "laminas/laminas-coding-standard": "~2.1.4",
+    "laminas/laminas-cache-storage-adapter-test": "^2.3",
+    "laminas/laminas-coding-standard": "^2.3",
     "psalm/plugin-phpunit": "^0.17.0",
     "vimeo/psalm": "^4.10"
   },
   "config": {
     "sort-packages": true,
     "platform": {
-      "php": "7.3.99"
+      "php": "7.4.99"
     },
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
@@ -46,7 +45,7 @@
     "psr-4": {
       "LaminasTest\\Cache\\Storage\\Adapter\\": [
         "test/unit",
-        "test/integration/Psr"
+        "test/integration"
       ]
     }
   },

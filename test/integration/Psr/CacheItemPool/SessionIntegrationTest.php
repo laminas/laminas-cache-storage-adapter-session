@@ -1,6 +1,8 @@
 <?php
 
-namespace LaminasTest\Cache\Psr\CacheItemPool;
+declare(strict_types=1);
+
+namespace LaminasTest\Cache\Storage\Adapter\Psr\CacheItemPool;
 
 use Laminas\Cache\Psr\CacheItemPool\CacheException;
 use Laminas\Cache\Psr\CacheItemPool\CacheItemPoolDecorator;
