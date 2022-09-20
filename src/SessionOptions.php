@@ -13,10 +13,8 @@ final class SessionOptions extends AdapterOptions
 {
     /**
      * The session container
-     *
-     * @var null|SessionContainer
      */
-    protected $sessionContainer;
+    private ?SessionContainer $sessionContainer = null;
 
     /**
      * Set the session container
