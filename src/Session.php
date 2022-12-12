@@ -11,13 +11,17 @@ use Laminas\Cache\Storage\FlushableInterface;
 use Laminas\Cache\Storage\IterableInterface;
 use Laminas\Session\Container as SessionContainer;
 use stdClass;
-use Traversable;
 
 use function array_key_exists;
 use function array_keys;
 use function array_merge;
 use function strpos;
 
+/**
+ * @template TKey
+ * @template TValue
+ * @implements IterableInterface<TKey, TValue>
+ */
 final class Session extends AbstractAdapter implements
     ClearByPrefixInterface,
     FlushableInterface,
@@ -28,8 +32,8 @@ final class Session extends AbstractAdapter implements
      *
      * @see    getOptions()
      *
-     * @param array|Traversable|SessionOptions $options
-     * @return Session
+     * @param iterable<array-key, mixed>|SessionOptions $options
+     * @return $this
      */
     public function setOptions($options)
     {
@@ -37,7 +41,9 @@ final class Session extends AbstractAdapter implements
             $options = new SessionOptions($options);
         }
 
-        return parent::setOptions($options);
+        parent::setOptions($options);
+
+        return $this;
     }
 
     /**
