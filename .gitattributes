@@ -1,4 +1,3 @@
-/.coveralls.yml export-ignore
 /.gitattributes export-ignore
 /.github/ export-ignore
 /.gitignore export-ignore
@@ -11,3 +10,5 @@
 /psalm-baseline.xml export-ignore
 /benchmark/ export-ignore
 /phpbench.json export-ignore
+/renovate.json export-ignore
+/composer.lock export-ignore
