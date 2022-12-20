@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.10.0@916b098b008f6de4543892b1e0651c1c3b92cbfa">
+<files psalm-version="5.2.0@fb685a16df3050d4c18d8a4100fe83abe6458cba">
   <file src="src/Session.php">
-    <LessSpecificReturnStatement occurrences="1">
-      <code>parent::setOptions($options)</code>
-    </LessSpecificReturnStatement>
+    <InvalidReturnStatement occurrences="1">
+      <code>new KeyListIterator($this, $keys)</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>KeyListIterator</code>
+    </InvalidReturnType>
     <MixedArgument occurrences="16">
       <code>$cntr-&gt;offsetGet($ns)</code>
       <code>$cntr-&gt;offsetGet($ns)</code>
@@ -22,28 +25,17 @@
       <code>$normalizedKey</code>
       <code>$normalizedKey</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="6">
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$keys</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAccess occurrences="1">
       <code>$data[$key]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
     </MixedArrayAccess>
-    <MixedArrayAssignment occurrences="9">
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
+    <MixedArrayAssignment occurrences="1">
       <code>$data[$normalizedKey]</code>
     </MixedArrayAssignment>
-    <MixedArrayOffset occurrences="3">
+    <MixedArrayOffset occurrences="2">
       <code>$data[$key]</code>
-      <code>$data[$normalizedKey]</code>
       <code>$result[$normalizedKey]</code>
     </MixedArrayOffset>
     <MixedAssignment occurrences="32">
@@ -89,23 +81,26 @@
       <code>$data[$normalizedKey]</code>
       <code>$data[$normalizedKey]</code>
     </MixedOperand>
-    <MixedReturnStatement occurrences="3">
+    <MixedReturnStatement occurrences="5">
+      <code>$newValue</code>
+      <code>$newValue</code>
       <code>$newValue</code>
       <code>$newValue</code>
       <code>$this-&gt;options</code>
     </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="1">
+    <MoreSpecificImplementedParamType occurrences="2">
+      <code>$options</code>
       <code>$options</code>
     </MoreSpecificImplementedParamType>
-    <MoreSpecificReturnType occurrences="1">
-      <code>Session</code>
-    </MoreSpecificReturnType>
     <PropertyNotSetInConstructor occurrences="1">
       <code>Session</code>
     </PropertyNotSetInConstructor>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(string) $prefix</code>
     </RedundantCastGivenDocblockType>
+    <UnusedForeachValue occurrences="1">
+      <code>$item</code>
+    </UnusedForeachValue>
   </file>
   <file src="test/integration/Psr/CacheItemPool/SessionIntegrationTest.php">
     <MissingReturnType occurrences="1">
