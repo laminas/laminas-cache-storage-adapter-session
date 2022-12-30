@@ -15,7 +15,7 @@ use stdClass;
 use function array_key_exists;
 use function array_keys;
 use function array_merge;
-use function strpos;
+use function str_starts_with;
 
 /**
  * @template TKey
@@ -131,7 +131,7 @@ final class Session extends AbstractAdapter implements
 
         $data = $cntr->offsetGet($ns);
         foreach ($data as $key => &$item) {
-            if (strpos($key, $prefix) === 0) {
+            if (str_starts_with($key, $prefix)) {
                 unset($data[$key]);
             }
         }
