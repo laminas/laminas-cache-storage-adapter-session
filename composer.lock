@@ -1941,16 +1941,16 @@
         },
         {
             "name": "laminas/laminas-serializer",
-            "version": "2.15.0",
+            "version": "2.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-serializer.git",
-                "reference": "a54801b20c94fdbbcbfb8e7611ca2d5fe0181c8f"
+                "reference": "0aba33d7ada84be4f51fa6fe58c916ba2497007a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-serializer/zipball/a54801b20c94fdbbcbfb8e7611ca2d5fe0181c8f",
-                "reference": "a54801b20c94fdbbcbfb8e7611ca2d5fe0181c8f",
+                "url": "https://api.github.com/repos/laminas/laminas-serializer/zipball/0aba33d7ada84be4f51fa6fe58c916ba2497007a",
+                "reference": "0aba33d7ada84be4f51fa6fe58c916ba2497007a",
                 "shasum": ""
             },
             "require": {
@@ -2007,7 +2007,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2023-07-08T08:46:03+00:00"
+            "time": "2023-09-04T17:07:23+00:00"
         },
         {
             "name": "myclabs/deep-copy",
