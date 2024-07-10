@@ -13,7 +13,7 @@ use function assert;
 
 final class AdapterPluginManagerDelegatorFactory
 {
-    public function __invoke(ContainerInterface $container, string $name, callable $callback): AdapterPluginManager
+    public function __invoke(ContainerInterface $_, string $__, callable $callback): AdapterPluginManager
     {
         $pluginManager = $callback();
         assert($pluginManager instanceof AdapterPluginManager);

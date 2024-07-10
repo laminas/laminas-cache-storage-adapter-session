@@ -9,7 +9,7 @@ use Laminas\Cache\Storage\Adapter\SessionOptions;
 use Laminas\Session\Container as SessionContainer;
 
 /**
- * @template-extends AbstractCommonAdapterTest<Session,SessionOptions>
+ * @template-extends AbstractCommonAdapterTest<SessionOptions,Session>
  */
 final class SessionTest extends AbstractCommonAdapterTest
 {
