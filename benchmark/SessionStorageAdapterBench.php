@@ -13,11 +13,12 @@ use PhpBench\Benchmark\Metadata\Annotations\Revs;
 use PhpBench\Benchmark\Metadata\Annotations\Warmup;
 
 /**
- * @Revs(100)
- * @Iterations(10)
- * @Warmup(1)
+ * @template-extends AbstractStorageAdapterBenchmark<SessionOptions>
  */
-class SessionStorageAdapterBench extends AbstractStorageAdapterBenchmark
+#[\PhpBench\Attributes\Revs(100)]
+#[\PhpBench\Attributes\Iterations(10)]
+#[\PhpBench\Attributes\Warmup(1)]
+final class SessionStorageAdapterBench extends AbstractStorageAdapterBenchmark
 {
     public function __construct()
     {

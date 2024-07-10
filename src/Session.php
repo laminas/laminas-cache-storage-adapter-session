@@ -9,8 +9,7 @@ use Laminas\Cache\Storage\Capabilities;
 use Laminas\Cache\Storage\ClearByPrefixInterface;
 use Laminas\Cache\Storage\FlushableInterface;
 use Laminas\Cache\Storage\IterableInterface;
-use Laminas\Session\Container as SessionContainer;
-use stdClass;
+use Laminas\Session\Container;
 
 use function array_key_exists;
 use function array_keys;
@@ -18,9 +17,8 @@ use function array_merge;
 use function str_starts_with;
 
 /**
- * @template TKey
- * @template TValue
- * @implements IterableInterface<TKey, TValue>
+ * @template-extends AbstractAdapter<SessionOptions>
+ * @implements IterableInterface<array-key,mixed>
  */
 final class Session extends AbstractAdapter implements
     ClearByPrefixInterface,
@@ -28,14 +26,9 @@ final class Session extends AbstractAdapter implements
     IterableInterface
 {
     /**
-     * Set options.
-     *
-     * @see    getOptions()
-     *
-     * @param iterable<array-key, mixed>|SessionOptions $options
-     * @return $this
+     * {@inheritDoc}
      */
-    public function setOptions($options)
+    public function setOptions(iterable|AdapterOptions $options): self
     {
         if (! $options instanceof SessionOptions) {
             $options = new SessionOptions($options);
@@ -47,26 +40,22 @@ final class Session extends AbstractAdapter implements
     }
 
     /**
-     * Get options.
-     *
-     * @see setOptions()
-     *
-     * @return SessionOptions
+     * {@inheritDoc}
      */
-    public function getOptions()
+    public function getOptions(): SessionOptions
     {
-        if (! $this->options) {
-            $this->setOptions(new SessionOptions());
+        $options = $this->options;
+        if ($options === null) {
+            $options = new SessionOptions();
+            $this->setOptions($options);
         }
-        return $this->options;
+        return $options;
     }
 
     /**
-     * Get the session container
-     *
-     * @return SessionContainer
+     * {@inheritDoc}
      */
-    protected function getSessionContainer()
+    protected function getSessionContainer(): Container
     {
         $sessionContainer = $this->getOptions()->getSessionContainer();
         if (! $sessionContainer) {
@@ -75,10 +64,8 @@ final class Session extends AbstractAdapter implements
         return $sessionContainer;
     }
 
-    /* IterableInterface */
-
     /**
-     * Get the storage iterator
+     * {@inheritDoc}
      */
     public function getIterator(): KeyListIterator
     {
@@ -94,30 +81,21 @@ final class Session extends AbstractAdapter implements
         return new KeyListIterator($this, $keys);
     }
 
-    /* FlushableInterface */
-
     /**
-     * Flush the whole session container
-     *
-     * @return bool
+     * {@inheritDoc}
      */
-    public function flush()
+    public function flush(): bool
     {
         $this->getSessionContainer()->exchangeArray([]);
         return true;
     }
 
-    /* ClearByPrefixInterface */
-
     /**
-     * Remove items matching given prefix
-     *
-     * @param string $prefix
-     * @return bool
+     * {@inheritDoc}
      */
-    public function clearByPrefix($prefix)
+    public function clearByPrefix(string $prefix): bool
     {
-        $prefix = (string) $prefix;
+        /** @psalm-suppress TypeDoesNotContainType To prevent deleting unexpected keys, we should double validate */
         if ($prefix === '') {
             throw new Exception\InvalidArgumentException('No prefix given');
         }
@@ -140,31 +118,23 @@ final class Session extends AbstractAdapter implements
         return true;
     }
 
-    /* reading */
-
     /**
-     * Internal method to get an item.
-     *
-     * @param  string  $normalizedKey
-     * @param  bool $success
-     * @param  mixed   $casToken
-     * @return mixed Data on success, null on failure
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalGetItem(&$normalizedKey, &$success = null, &$casToken = null)
+    protected function internalGetItem(string $normalizedKey, ?bool &$success = null, mixed &$casToken = null): mixed
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
 
         if (! $cntr->offsetExists($ns)) {
             $success = false;
-            return;
+            return null;
         }
 
         $data    = $cntr->offsetGet($ns);
         $success = array_key_exists($normalizedKey, $data);
         if (! $success) {
-            return;
+            return null;
         }
 
         $value    = $data[$normalizedKey];
@@ -173,13 +143,9 @@ final class Session extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to get multiple items.
-     *
-     * @param  array $normalizedKeys
-     * @return array Associative array of keys and values
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalGetItems(array &$normalizedKeys)
+    protected function internalGetItems(array $normalizedKeys): array
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -200,12 +166,9 @@ final class Session extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to test if an item exists.
-     *
-     * @param  string $normalizedKey
-     * @return bool
+     * {@inheritDoc}
      */
-    protected function internalHasItem(&$normalizedKey)
+    protected function internalHasItem(string $normalizedKey): bool
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -219,12 +182,9 @@ final class Session extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to test multiple items.
-     *
-     * @param array $normalizedKeys
-     * @return array Array of found keys
+     * {@inheritDoc}
      */
-    protected function internalHasItems(array &$normalizedKeys)
+    protected function internalHasItems(array $normalizedKeys): array
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -245,31 +205,9 @@ final class Session extends AbstractAdapter implements
     }
 
     /**
-     * Get metadata of an item.
-     *
-     * @param  string $normalizedKey
-     * @return array|bool Metadata on success, false on failure
-     * @throws Exception\ExceptionInterface
-     * @triggers getMetadata.pre(PreEvent)
-     * @triggers getMetadata.post(PostEvent)
-     * @triggers getMetadata.exception(ExceptionEvent)
+     * {@inheritDoc}
      */
-    protected function internalGetMetadata(&$normalizedKey)
-    {
-        return $this->internalHasItem($normalizedKey) ? [] : false;
-    }
-
-    /* writing */
-
-    /**
-     * Internal method to store an item.
-     *
-     * @param  string $normalizedKey
-     * @param  mixed  $value
-     * @return bool
-     * @throws Exception\ExceptionInterface
-     */
-    protected function internalSetItem(&$normalizedKey, &$value)
+    protected function internalSetItem(string $normalizedKey, mixed $value): bool
     {
         $cntr                 = $this->getSessionContainer();
         $ns                   = $this->getOptions()->getNamespace();
@@ -280,13 +218,9 @@ final class Session extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to store multiple items.
-     *
-     * @param  array $normalizedKeyValuePairs
-     * @return array Array of not stored keys
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalSetItems(array &$normalizedKeyValuePairs)
+    protected function internalSetItems(array $normalizedKeyValuePairs): array
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -302,14 +236,9 @@ final class Session extends AbstractAdapter implements
     }
 
     /**
-     * Add an item.
-     *
-     * @param  string $normalizedKey
-     * @param  mixed  $value
-     * @return bool
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalAddItem(&$normalizedKey, &$value)
+    protected function internalAddItem(string $normalizedKey, mixed $value): bool
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -331,13 +260,9 @@ final class Session extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to add multiple items.
-     *
-     * @param  array $normalizedKeyValuePairs
-     * @return array Array of not stored keys
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalAddItems(array &$normalizedKeyValuePairs)
+    protected function internalAddItems(array $normalizedKeyValuePairs): array
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -362,14 +287,9 @@ final class Session extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to replace an existing item.
-     *
-     * @param  string $normalizedKey
-     * @param  mixed  $value
-     * @return bool
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalReplaceItem(&$normalizedKey, &$value)
+    protected function internalReplaceItem(string $normalizedKey, mixed $value): bool
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -389,13 +309,9 @@ final class Session extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to replace multiple existing items.
-     *
-     * @param  array $normalizedKeyValuePairs
-     * @return array Array of not stored keys
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalReplaceItems(array &$normalizedKeyValuePairs)
+    protected function internalReplaceItems(array $normalizedKeyValuePairs): array
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -418,13 +334,9 @@ final class Session extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to remove an item.
-     *
-     * @param  string $normalizedKey
-     * @return bool
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalRemoveItem(&$normalizedKey)
+    protected function internalRemoveItem(string $normalizedKey): bool
     {
         $cntr = $this->getSessionContainer();
         $ns   = $this->getOptions()->getNamespace();
@@ -450,103 +362,24 @@ final class Session extends AbstractAdapter implements
     }
 
     /**
-     * Internal method to increment an item.
-     *
-     * @param  string $normalizedKey
-     * @param  int    $value
-     * @return int|bool The new value on success, false on failure
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
-    protected function internalIncrementItem(&$normalizedKey, &$value)
+    protected function internalGetCapabilities(): Capabilities
     {
-        $cntr = $this->getSessionContainer();
-        $ns   = $this->getOptions()->getNamespace();
-
-        if ($cntr->offsetExists($ns)) {
-            $data = $cntr->offsetGet($ns);
-        } else {
-            $data = [];
-        }
-
-        if (array_key_exists($normalizedKey, $data)) {
-            $data[$normalizedKey] += $value;
-            $newValue              = $data[$normalizedKey];
-        } else {
-            // initial value
-            $newValue             = $value;
-            $data[$normalizedKey] = $newValue;
-        }
-
-        $cntr->offsetSet($ns, $data);
-        return $newValue;
-    }
-
-    /**
-     * Internal method to decrement an item.
-     *
-     * @param  string $normalizedKey
-     * @param  int    $value
-     * @return int|bool The new value on success, false on failure
-     * @throws Exception\ExceptionInterface
-     */
-    protected function internalDecrementItem(&$normalizedKey, &$value)
-    {
-        $cntr = $this->getSessionContainer();
-        $ns   = $this->getOptions()->getNamespace();
-
-        if ($cntr->offsetExists($ns)) {
-            $data = $cntr->offsetGet($ns);
-        } else {
-            $data = [];
-        }
-
-        if (array_key_exists($normalizedKey, $data)) {
-            $data[$normalizedKey] -= $value;
-            $newValue              = $data[$normalizedKey];
-        } else {
-            // initial value
-            $newValue             = -$value;
-            $data[$normalizedKey] = $newValue;
-        }
-
-        $cntr->offsetSet($ns, $data);
-        return $newValue;
-    }
-
-    /* status */
-
-    /**
-     * Internal method to get capabilities of this adapter
-     *
-     * @return Capabilities
-     */
-    protected function internalGetCapabilities()
-    {
-        if ($this->capabilities === null) {
-            $this->capabilityMarker = new stdClass();
-            $this->capabilities     = new Capabilities(
-                $this,
-                $this->capabilityMarker,
-                [
-                    'supportedDatatypes' => [
-                        'NULL'     => true,
-                        'boolean'  => true,
-                        'integer'  => true,
-                        'double'   => true,
-                        'string'   => true,
-                        'array'    => 'array',
-                        'object'   => 'object',
-                        'resource' => false,
-                    ],
-                    'supportedMetadata'  => [],
-                    'minTtl'             => 0,
-                    'maxKeyLength'       => 0,
-                    'namespaceIsPrefix'  => false,
-                    'namespaceSeparator' => '',
-                ]
-            );
-        }
-
-        return $this->capabilities;
+        return $this->capabilities ??= new Capabilities(
+            maxKeyLength: Capabilities::UNLIMITED_KEY_LENGTH,
+            ttlSupported: false,
+            namespaceIsPrefix: false,
+            supportedDataTypes: [
+                'NULL'     => true,
+                'boolean'  => true,
+                'integer'  => true,
+                'double'   => true,
+                'string'   => true,
+                'array'    => 'array',
+                'object'   => 'object',
+                'resource' => false,
+            ],
+        );
     }
 }

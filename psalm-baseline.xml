@@ -1,115 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.2.0@fb685a16df3050d4c18d8a4100fe83abe6458cba">
+<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
+  <file src="benchmark/SessionStorageAdapterBench.php">
+    <UnusedClass>
+      <code><![CDATA[SessionStorageAdapterBench]]></code>
+    </UnusedClass>
+  </file>
   <file src="src/Session.php">
-    <InvalidReturnStatement occurrences="1">
-      <code>new KeyListIterator($this, $keys)</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>KeyListIterator</code>
-    </InvalidReturnType>
-    <MixedArgument occurrences="16">
-      <code>$cntr-&gt;offsetGet($ns)</code>
-      <code>$cntr-&gt;offsetGet($ns)</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$key</code>
-      <code>$normalizedKey</code>
-      <code>$normalizedKey</code>
+    <InvalidArgument>
+      <code><![CDATA[$this]]></code>
+    </InvalidArgument>
+    <MixedArgument>
+      <code><![CDATA[$cntr->offsetGet($ns)]]></code>
+      <code><![CDATA[$cntr->offsetGet($ns)]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$key]]></code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$keys</code>
+    <MixedArgumentTypeCoercion>
+      <code><![CDATA[$keys]]></code>
     </MixedArgumentTypeCoercion>
-    <MixedArrayAccess occurrences="1">
-      <code>$data[$key]</code>
+    <MixedArrayAccess>
+      <code><![CDATA[$data[$key]]]></code>
     </MixedArrayAccess>
-    <MixedArrayAssignment occurrences="1">
-      <code>$data[$normalizedKey]</code>
+    <MixedArrayAssignment>
+      <code><![CDATA[$data[$normalizedKey]]]></code>
     </MixedArrayAssignment>
-    <MixedArrayOffset occurrences="2">
-      <code>$data[$key]</code>
-      <code>$result[$normalizedKey]</code>
-    </MixedArrayOffset>
-    <MixedAssignment occurrences="32">
-      <code>$casToken</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-      <code>$item</code>
-      <code>$key</code>
-      <code>$newValue</code>
-      <code>$newValue</code>
-      <code>$normalizedKey</code>
-      <code>$normalizedKey</code>
-      <code>$result[$normalizedKey]</code>
-      <code>$result[]</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
+    <MixedAssignment>
+      <code><![CDATA[$casToken]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data[$normalizedKey]]]></code>
+      <code><![CDATA[$data[$normalizedKey]]]></code>
+      <code><![CDATA[$data[$normalizedKey]]]></code>
+      <code><![CDATA[$data[$normalizedKey]]]></code>
+      <code><![CDATA[$data[$normalizedKey]]]></code>
+      <code><![CDATA[$item]]></code>
+      <code><![CDATA[$key]]></code>
+      <code><![CDATA[$result[$normalizedKey]]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="3">
-      <code>SessionOptions</code>
-      <code>int|bool</code>
-      <code>int|bool</code>
-    </MixedInferredReturnType>
-    <MixedOperand occurrences="2">
-      <code>$data[$normalizedKey]</code>
-      <code>$data[$normalizedKey]</code>
-    </MixedOperand>
-    <MixedReturnStatement occurrences="5">
-      <code>$newValue</code>
-      <code>$newValue</code>
-      <code>$newValue</code>
-      <code>$newValue</code>
-      <code>$this-&gt;options</code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="2">
-      <code>$options</code>
-      <code>$options</code>
-    </MoreSpecificImplementedParamType>
-    <PropertyNotSetInConstructor occurrences="1">
-      <code>Session</code>
-    </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType occurrences="1">
-      <code>(string) $prefix</code>
-    </RedundantCastGivenDocblockType>
-    <UnusedForeachValue occurrences="1">
-      <code>$item</code>
+    <UnusedForeachValue>
+      <code><![CDATA[$item]]></code>
     </UnusedForeachValue>
   </file>
+  <file src="src/Session/Module.php">
+    <UnusedClass>
+      <code><![CDATA[Module]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/SessionOptions.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[setSessionContainer]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="test/integration/Psr/CacheItemPool/SessionIntegrationTest.php">
-    <MissingReturnType occurrences="1">
-      <code>testAdapterNotSupported</code>
+    <MissingReturnType>
+      <code><![CDATA[testAdapterNotSupported]]></code>
     </MissingReturnType>
   </file>
   <file src="test/integration/Psr/SimpleCache/SessionIntegrationTest.php">
-    <MissingReturnType occurrences="1">
-      <code>testAdapterNotSupported</code>
+    <MissingReturnType>
+      <code><![CDATA[testAdapterNotSupported]]></code>
     </MissingReturnType>
   </file>
 </files>
